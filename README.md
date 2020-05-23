@@ -31,8 +31,8 @@ Make sure you rebuild your containers after making this change with:
 `$ docker-compose down && docker-compose up --build`
 
 ## To execute tests
-`$ docker build -f Dockerfile.dev .`
-`$ docker run <image-id> npm run test`  (this will run the tests once only)
+`$ docker build -f Dockerfile.dev .`<br/>
+`$ docker run <image-id> npm run test`  (this will run the tests once only)<br/>
 `$ docker run -it <image-id> npm run test` (this will take an input parameter to run the tests if we need to run them more than once)
 
 
@@ -47,7 +47,7 @@ One way of running the tests along with using the input values is:
 2. then do: `$ docker exec -it <container-id>` 
 
 ## To build and run the production docker image
-`$ docker build .`
+`$ docker build .`<br/>
 `$ docker run -p 8080:80 <image-id>`
 
 
