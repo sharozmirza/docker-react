@@ -1,49 +1,54 @@
-## To run a custom Dockerfile e.g. Dockerfile.dev
-$ docker build -f Dockerfile.dev .
+To run a custom Dockerfile e.g. Dockerfile.dev:
 
-## We deleted local node_modules folder to avoid duplication, since another copy of node_module folder will be created in the docker image
+`$ docker build -f Dockerfile.dev .`
 
-## To run the image locally
-$ docker run -it -p 3000:3000 <image-id>
+*We deleted local node_modules folder to avoid duplication, since another copy of node_module folder will be created in the docker image.*
+
+To run the image locally:
+
+`$ docker run -it -p 3000:3000 <image-id>`
 
 ## Using Docker Volumes
 Instead of copying the folders from the project to the Docker container, we can use Docker Volumes to reflect changes that we make
 in the local directory. This command creates a reference to the local directory so that the changes in that directory can be reflected
 in the Docker container without restarting the container:
 
-$ docker run -it -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image-id>
+`$ docker run -it -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image-id>`
 
-## Recently, a bug was introduced with the latest Create React App version that is causing the React app to exit when starting with Docker Compose.
+*Recently, a bug was introduced with the latest Create React App version that is causing the React app to exit when starting with Docker Compose.*
 
 To Resolve this:
-Add stdin_open property to your docker-compose.yml file
 
+Add `stdin_open` property to your `docker-compose.yml` file:
+
+```
     web:
         stdin_open: true
+```
 
 Make sure you rebuild your containers after making this change with:
 
-$ docker-compose down && docker-compose up --build
+`$ docker-compose down && docker-compose up --build`
 
 ## To execute tests
-$ docker build -f Dockerfile.dev .
-$ docker run <image-id> npm run test  (this will run the tests once only)
-$ docker run -it <image-id> npm run test (this will take an input parameter to run the tests if we need to run them more than once)
+`$ docker build -f Dockerfile.dev .`
+`$ docker run <image-id> npm run test`  (this will run the tests once only)
+`$ docker run -it <image-id> npm run test` (this will take an input parameter to run the tests if we need to run them more than once)
 
 
-## If you use docker-compose to run both the web and tests services: 
-##   (by doing: $ docker-compose up --build)
-## any changes that are made in the code or tests will be reflected automatically
-## but you will not be able to send any input e.g. 'p', 'q', 't' or 'w'
-## to investigate the tests more.
+If you use docker-compose to run both the web and tests services: 
+(by doing: `$ docker-compose up --build`)
+any changes that are made in the code or tests will be reflected automatically
+but you will not be able to send any input e.g. 'p', 'q', 't' or 'w' to investigate the tests more.
 
 One way of running the tests along with using the input values is:
+
 1. Run the app in docker container with out the test
-2. then do: $ docker exec -it <container-id> 
+2. then do: `$ docker exec -it <container-id>` 
 
 ## To build and run the production docker image
-$ docker build .
-$ docker run -p 8080:80 <image-id>
+`$ docker build .`
+`$ docker run -p 8080:80 <image-id>`
 
 
 --------------------------------------------------------------------------------------------------------
