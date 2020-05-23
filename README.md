@@ -22,8 +22,8 @@ To Resolve this:
 Add `stdin_open` property to your `docker-compose.yml` file:
 
 ```
-    web:
-        stdin_open: true
+web:
+    stdin_open: true
 ```
 
 Make sure you rebuild your containers after making this change with:
