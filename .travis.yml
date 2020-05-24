@@ -1,0 +1,16 @@
+language: generic
+
+# setting superuser permission for the build
+sudo: required
+
+# install docker/docker-cli
+services:
+    - docker
+
+# everything under this section runs before we run tests or deploy project
+before_install:
+    - docker build -t sharozmirza/docker-react -f Dockerfile.dev .
+
+# this section has all the commands to run the test suit
+script:
+    - docker run -e CI=true sharozmirza/docker-react npm run test
